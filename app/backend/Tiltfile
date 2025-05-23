@@ -1,0 +1,9 @@
+docker_build('hotel/backend', '.', build_args={"--platform": "linux/amd64"})
+yaml = helm(
+  './helm/',
+  name='backend',
+  namespace='hotel'
+)
+k8s_yaml(yaml)
+k8s_resource('backend', port_forwards=3000)
+k8s_resource('backend-postgres', port_forwards=5432)
