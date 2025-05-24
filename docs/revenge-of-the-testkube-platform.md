@@ -35,4 +35,14 @@ Para ello utilizaremos [Testkube](https://testkube.io), la idea es que puedan pr
 
 5. Una vez creado, lo ejecutaremos manualmente, para ello sigue las instrucciones del Orador.
 
+## Ir más allá en las pruebas
 
+Las pruebas de integración requieren más que código para ejecutar, necesitamos:
+
+* Una instancia de la base de datos.
+* Datos de prueba pre-cargados.
+* Entregar los datos de la base de datos a la ejecución de las pruebas
+
+Sigue las instrucciones del Orador para construir cada uno de esos pasos.
+
+Ahora toca seguir al último episodio, el [Episodio IV: Una Nueva Esperanza](./revenge-of-the-testkube-platform.md).
