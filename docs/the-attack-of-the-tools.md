@@ -4,14 +4,14 @@
 
 Pasos a seguir:
 
-## Estandarizar
+## Estandarizar (5 min)
 
 Para estandarizar necesitamos asegurar que los equipos utilicen archivos de configuración de los frameworks de forma lo más unificada posible, en este ejemplo utilizamos código base autogenerado por el framework [NestJS](https://nestjs.com/), observa detalles tales como las dependencias y la configuración del framework [Jest](https://jestjs.io/) en los siguientes archivos:
 
 * `package.json`: contiene las dependencias de Jest que vamos a necesitar utilizar, y también al final del archivo las configuraciones básicas para el uso del framework Jest.
 * `test/jest-e2e.json`: extensión de la configuración de Jest para adaptarse a la ejecución de las pruebas de integración.
 
-## Compartir éxitos
+## Compartir éxitos (5 min)
 
 Todos los frameworks de pruebas automatizadas tienen muchas posibles configuraciones, en este caso vamos a compartir el conocimiento de como generamos reportes web y en formato JUnit:
 

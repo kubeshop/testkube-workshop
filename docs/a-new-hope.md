@@ -4,7 +4,7 @@
 
 Pasos a seguir:
 
-## Monitorear bugs más allá
+## Monitorear bugs más allá (?? min)
 
 Desafíos:
 
@@ -13,7 +13,7 @@ Desafíos:
 3. Crear pruebas paralelizadas a partir de los ejemplos.
 4. Crear pruebas de carga básica con K6 para la aplicación [PodIfo](https://github.com/stefanprodan/podinfo/tree/master) y un kubernetes trigger que ejecute las pruebas automaticamente cuando el despliegue termine.
 
-## Datos visibles
+## Datos visibles (?? min)
 
 Desafios:
 

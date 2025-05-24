@@ -4,7 +4,7 @@
 
 Pasos a seguir:
 
-## Gestionar la ejecución
+## Gestionar la ejecución (15 min)
 
 Para ello utilizaremos [Testkube](https://testkube.io), la idea es que puedan probar su propia instancia por lo tanto se les hará entrega de llaves de licencias para que puedan utilizar, si no disponen de un cluster de Kubernetes en el que desplegar soliciten una alternativa al Orador.
 
@@ -35,7 +35,7 @@ Para ello utilizaremos [Testkube](https://testkube.io), la idea es que puedan pr
 
 5. Una vez creado, lo ejecutaremos manualmente, para ello sigue las instrucciones del Orador.
 
-## Ir más allá en las pruebas
+## Ir más allá en las pruebas (10 min)
 
 Las pruebas de integración requieren más que código para ejecutar, necesitamos:
 
