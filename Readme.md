@@ -8,4 +8,4 @@ This repository contains the code needed to execute step by step the Testing War
 
 ## Workshop guide step-by-step
 
-Navigate to [Testing Wars docs](https://testing-wars.github.io) and follow the guide.
+Navigate to [Testing Wars docs](https://caiodonascimento.github.io/testing-wars/) and follow the guide.

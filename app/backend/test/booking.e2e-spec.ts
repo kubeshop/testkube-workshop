@@ -11,7 +11,7 @@ import { IRoom } from 'src/interfaces/room.interface';
 
 const rooms = Utils.loadRoomData();
 
-describe('AppController (e2e)', () => {
+describe('Booking Process (e2e)', () => {
   let app: INestApplication<App>;
   let hotelId: string = '47c1082c-2fa6-11f0-819b-325096b39f47';
   let filteredRooms: IRoom[] = [];
