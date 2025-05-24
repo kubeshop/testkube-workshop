@@ -73,6 +73,7 @@ affinity: {}
 
 db:
   enabled: true
+  # sync: false
   nameOverride: postgres
   auth:
     database: hotel

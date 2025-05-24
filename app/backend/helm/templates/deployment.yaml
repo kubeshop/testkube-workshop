@@ -59,6 +59,10 @@ spec:
                 secretKeyRef:
                   name: {{ .Release.Name }}-{{ .Values.db.nameOverride | default "db" }}
                   key: password
+            {{- if .Values.db.sync }}
+            - name: DATABASE_SYNCHRONIZE
+              value: "true"
+            {{- end }}
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
