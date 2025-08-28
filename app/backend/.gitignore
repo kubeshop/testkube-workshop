@@ -58,3 +58,5 @@ helm/charts/
 
 junit.xml
 test-report.html
+
+*-database-sync.ts

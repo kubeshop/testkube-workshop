@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM node:slim AS builder
+FROM node:20.19-alpine AS builder
 
 WORKDIR /app/src
 
@@ -11,7 +11,7 @@ COPY . .
 
 RUN npm run build
 
-FROM node:slim
+FROM node:20.19-alpine
 
 LABEL maintainer="Caio Medeiros Pinto <caio.dona@gmail.com>"
 
@@ -21,4 +21,4 @@ COPY --from=builder /app/src/package*.json /app/src/dist /app/src/
 
 RUN npm install --production
 
-ENTRYPOINT [ "node", "main.js" ]
+ENTRYPOINT [ "node", "src/main.js" ]

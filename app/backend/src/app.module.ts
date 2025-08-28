@@ -12,7 +12,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        host: configService.get('DATABASE_HOST'),
+        host: configService.get('DATABASE_HOST') || 'localhost',
         port: +configService.get('DATABASE_PORT') || 5432,
         username: configService.get('DATABASE_USER'),
         password: configService.get('DATABASE_PASSWORD'),

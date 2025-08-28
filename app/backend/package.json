@@ -20,6 +20,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:load": "K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_EXPORT=resutls-load/k6-test-report.html k6 run load/test.js ",
     "typeorm": "typeorm-ts-node-commonjs"
   },
   "dependencies": {
