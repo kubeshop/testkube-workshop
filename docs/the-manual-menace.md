@@ -55,12 +55,14 @@ Para aprovechar al máximo el tiempo de la experiencia utilizaremos un software 
 
     ```bash
     kubectl create ns hotel
-    Tilt up
+    tilt up
     ```
 
     Prepara la base de datos creada con datos de prueba:
 
     ```bash
+    npm run typeorm -- migration:generate database-sync -d ./src/datasource.ts
+    npm run typeorm -- migration:run -d ./src/datasource.ts
     npm run test:load-data
     ```
 

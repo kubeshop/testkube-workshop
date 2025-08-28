@@ -45,4 +45,4 @@ Las pruebas de integración requieren más que código para ejecutar, necesitamo
 
 Sigue las instrucciones del Orador para construir cada uno de esos pasos.
 
-Ahora toca seguir al último episodio, el [Episodio IV: Una Nueva Esperanza](./revenge-of-the-testkube-platform.md).
+Ahora toca seguir al último episodio, el [Episodio IV: Una Nueva Esperanza](./a-new-hope.md).
