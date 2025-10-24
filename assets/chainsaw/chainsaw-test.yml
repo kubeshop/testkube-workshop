@@ -1,0 +1,12 @@
+apiVersion: chainsaw.kyverno.io/v1alpha1
+kind: Test
+metadata:
+  name: default-deployment-rules
+spec:
+  timeouts:
+    assert: 1m
+  steps:
+  - try:
+      - assert:
+          file: assert-deployment.yaml
+

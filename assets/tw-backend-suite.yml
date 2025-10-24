@@ -13,4 +13,5 @@ spec:
     - execute:
         workflows:
           - name: app-backend-load
+          - name: chainsaw-test
 status: {}

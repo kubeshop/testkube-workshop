@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+spec:
+  (replicas > `2` && replicas < `5`): true
+  template:
+    spec:
+      # the `~` modifier tells Chainsaw to iterate over the array elements
+      ~.(containers):
+        securityContext:
+          runAsNonRoot: true
+status:
+  (availableReplicas > `1`): true
+  (conditions[?type == 'Ready']):
+  - status: 'True'

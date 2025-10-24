@@ -1,0 +1,45 @@
+---
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: chainsaw-service-account
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: chainsaw-role-binding
+subjects:
+- kind: ServiceAccount
+  name: chainsaw-service-account
+roleRef:
+  kind: ClusterRole
+  name: view
+  apiGroup: rbac.authorization.k8s.io
+---
+kind: TestWorkflow
+apiVersion: testworkflows.testkube.io/v1
+metadata:
+  name: chainsaw-test
+spec:
+  config:
+    namespace:
+      type: string
+      default: my-app
+  content:
+    git:
+      uri: https://github.com/caiodonascimento/testing-wars.git
+      revision: main
+      paths:
+      - assets/chainsaw-test
+  container:
+    image: ghcr.io/kyverno/chainsaw:latest
+  pod:
+    serviceAccountName: chainsaw-service-account
+  steps:
+  - name: Run test
+    shell: |
+      chainsaw test --report-format XML --report-path /data/repo --report-name junit /data/repo/ --namespace {{ config.namespace }}
+    artifacts:
+      paths:
+        - /data/repo/junit.xml
+status: {}
