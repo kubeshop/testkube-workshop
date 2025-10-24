@@ -10,13 +10,14 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: depot-ubuntu-22.04
     permissions:
       contents: read
       id-token: write
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+      - uses: depot/setup-action@v1
 
       - name: Login to DockerHub
         uses: docker/login-action@v3
@@ -42,13 +43,16 @@ jobs:
             type=sha
 
       - name: Build Backend image
-        uses: docker/bake-action@v6
+        uses: depot/bake-action@v1.12.1
         with:
+          token: ${{ secrets.DEPOT_TOKEN }}
+          project: default
           files: |
             ./app/docker-bake.hcl
             cwd://${{ steps.backend-meta.outputs.bake-file }}
-          targets: backend
           push: true
+          save: true
+          save-tag: ${{ github.event.number || github.run_id }}
 
   run-test:
     runs-on: ubuntu-latest
@@ -401,6 +405,11 @@ jobs:
             --env paris \
             --namespace testkube \
             --floating
+
+          # Create Chainsaw service account and role binding in vCluster
+          echo "=== Setting up Chainsaw service account in vCluster ==="
+          kubectl create serviceaccount chainsaw-service-account -n testkube --dry-run=client -o yaml | kubectl apply -f -
+          kubectl create rolebinding chainsaw-service-account-binding --clusterrole=view --serviceaccount=testkube:chainsaw-service-account -n testkube --dry-run=client -o yaml | kubectl apply -f -
 
           echo "=== Creating my-app namespace in vCluster ==="
           kubectl create namespace my-app --dry-run=client -o yaml | kubectl apply -f -
