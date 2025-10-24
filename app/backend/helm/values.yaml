@@ -1,8 +1,8 @@
 replicaCount: 1
 image:
-  repository: hotel/backend
+  repository: caiomede/hotel-backend
   pullPolicy: Always
-  tag: latest
+  tag: main
 
 imagePullSecrets: []
 nameOverride: ""
