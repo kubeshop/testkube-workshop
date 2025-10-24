@@ -12,8 +12,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
       id-token: write
+      contents: read
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -45,7 +45,7 @@ jobs:
       - name: Build Backend image
         uses: depot/bake-action@v1.12.1
         with:
-          token: ${{ secrets.DEPOT_TOKEN }}
+          project: ${{ secrets.DEPOT_PROJECT_ID }}
           files: |
             ./app/docker-bake.hcl
             cwd://${{ steps.backend-meta.outputs.bake-file }}
