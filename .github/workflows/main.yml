@@ -363,6 +363,7 @@ jobs:
           argocd app create backend-vcluster-pr-$PR_NUMBER \
             --repo ${{ github.server_url }}/${{ github.repository }} \
             --path app/backend/helm \
+            --helm-set persistence.enabled=false \
             --dest-server "$VCLUSTER_SERVER" \
             --dest-namespace my-app \
             --revision ${{ github.head_ref || github.ref_name }} \
