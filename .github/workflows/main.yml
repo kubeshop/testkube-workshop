@@ -46,7 +46,8 @@ jobs:
         with:
           files: |
             ./app/docker-bake.hcl
-            cwd://${{ steps.backend-metadata.outputs.bake-file }}
+            cwd://${{ steps.backend-meta.outputs.bake-file }}
+          targets: backend
           push: true
 
   # run-test:
