@@ -1,24 +1,28 @@
 # syntax=docker/dockerfile:1
-FROM node:20.19-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app/src
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm ci
 
 COPY . .
 
 RUN npm run build
 
-FROM node:20.19-alpine
+FROM node:20-alpine
 
-LABEL maintainer="Caio Medeiros Pinto <caio.dona@gmail.com>"
+RUN addgroup -g 1001 -S nodejs && adduser -S nextjs -u 1001
 
 WORKDIR /app/src
 
-COPY --from=builder /app/src/package*.json /app/src/dist /app/src/
+COPY --from=builder /app/src/package*.json ./
 
-RUN npm install --production
+RUN npm ci --only=production
 
-ENTRYPOINT [ "node", "src/main.js" ]
+COPY --from=builder /app/src/dist ./dist
+
+USER nextjs
+
+ENTRYPOINT ["node", "dist/main.js"]
