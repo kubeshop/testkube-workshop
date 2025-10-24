@@ -1,0 +1,16 @@
+apiVersion: testworkflows.testkube.io/v1
+kind: TestWorkflow
+metadata:
+  name: backend-suites
+  labels:
+    app: backend
+spec:
+  steps:
+    - execute:
+        workflows:
+          - name: app-backend-unit
+          - name: app-backend-integration
+    - execute:
+        workflows:
+          - name: app-backend-load
+status: {}

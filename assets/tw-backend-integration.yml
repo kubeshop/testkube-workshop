@@ -1,0 +1,84 @@
+kind: TestWorkflow
+apiVersion: testworkflows.testkube.io/v1
+metadata:
+  name: backend-integration
+  namespace: testkube
+  labels:
+    app: backend
+    testkube.io/name: Jest
+    testkube.io/type: integration
+spec:
+  content:
+    git:
+      uri: https://github.com/caiodonascimento/testing-wars.git
+      revision: main
+      paths:
+      - app/backend
+  container:
+    workingDir: /data/repo/app/backend
+    image: node:slim
+  services:
+    database:
+      image: postgres:latest
+      env:
+      - name: POSTGRES_USER
+        value: hotel
+      - name: POSTGRES_PASSWORD
+        value: hotel
+      - name: POSTGRES_DATABASE
+        value: hotel
+      readinessProbe:
+        exec:
+          command:
+          - pg_isready
+          - -U
+          - hotel
+        initialDelaySeconds: 5
+        periodSeconds: 5
+  steps:
+  - name: Install dependencies
+    shell: npm ci
+  - name: Sync database schema
+    run:
+      env:
+      - name: DATABASE_HOST
+        value: '{{ services.database.0.ip }}'
+      shell: |
+        npm run typeorm -- migration:generate database-sync -d ./src/datasource.ts
+        npm run typeorm -- migration:run -d ./src/datasource.ts
+  - name: Load test data
+    run:
+      image: postgres:latest
+      env:
+      - name: POSTGRES_USER
+        value: hotel
+      - name: POSTGRES_PASSWORD
+        value: hotel
+      - name: POSTGRES_DATABASE
+        value: hotel
+      - name: POSTGRES_HOST
+        value: '{{ services.database.0.ip }}'
+      shell: ./test/data-management/local_run.sh
+  - name: Install reporters
+    shell: npm i -D jest-html-reporter jest-junit
+  - name: Run tests
+    run:
+      env:
+      - name: DATABASE_HOST
+        value: '{{ services.database.0.ip }}'
+      - name: DATABASE_PORT
+        value: "5432"
+      - name: DATABASE_USER
+        value: hotel
+      - name: DATABASE_PASSWORD
+        value: hotel
+      - name: DATABASE_NAME
+        value: hotel
+      - name: DATABASE_SYNCHRONIZE
+        value: "false"
+      shell: npm run test:e2e -- --ci --reporters=default --reporters=jest-junit --reporters=jest-html-reporter
+    artifacts:
+      paths:
+      - junit.xml
+      - test-report.html
+status: {}

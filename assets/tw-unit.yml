@@ -1,0 +1,31 @@
+kind: TestWorkflow
+apiVersion: testworkflows.testkube.io/v1
+metadata:
+  name: backend-unit
+  namespace: testkube
+  labels:
+    app: backend
+    testkube.io/name: Jest
+    testkube.io/type: unit
+spec:
+  content:
+    git:
+      uri: https://github.com/caiodonascimento/testing-wars.git
+      revision: main
+      paths:
+      - app/backend
+  container:
+    workingDir: /data/repo/app/backend
+    image: node:slim
+  steps:
+  - name: Install dependencies
+    shell: npm ci
+  - name: Install reporter
+    shell: npm i -D jest-junit
+  - name: Run tests
+    shell: npm run test:cov -- --ci --reporters=default --reporters=jest-junit
+    artifacts:
+      paths:
+      - junit.xml
+      - coverage/**/*
+status: {}

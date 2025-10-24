@@ -1,0 +1,49 @@
+apiVersion: testworkflows.testkube.io/v1
+kind: TestWorkflow
+metadata:
+  name: backend-load
+  namespace: testkube
+  labels:
+    app: backend
+    testkube.io/name: K6
+    testkube.io/type: load
+spec:
+  config:
+    baseUrl:
+      type: string
+      default: http://backend.hotel.svc:3000
+  content:
+    git:
+      uri: https://github.com/caiodonascimento/testing-wars.git
+      revision: main
+      paths:
+      - app/backend
+  container:
+    workingDir: /data/repo/app/backend
+    image: grafana/k6:1.1.0
+    resources:
+      requests:
+        cpu: 500m
+        memory: 500Mi
+  job:
+    activeDeadlineSeconds: 300
+  steps:
+  - name: Run test
+    steps:
+    - shell: mkdir /data/artifacts
+    - run:
+        shell: k6 run load/test.js
+        env:
+        - name: BASE_URL
+          value: "{{ config.baseUrl }}"
+        - name: K6_WEB_DASHBOARD
+          value: "true"
+        - name: K6_WEB_DASHBOARD_EXPORT
+          value: "/data/artifacts/k6-test-report.html"
+    - name: Saving artifacts
+      condition: always
+      workingDir: /data/artifacts
+      artifacts:
+        paths:
+        - '*'
+status: {}
