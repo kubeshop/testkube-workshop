@@ -36,17 +36,18 @@ jobs:
             caiomede/hotel-backend
           tags: |
             type=ref,event=branch
+            type=ref,event=pr
             type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha
 
       - name: Build Backend image
         uses: docker/bake-action@v6
         with:
           files: |
             ./app/docker-bake.hcl
-            ${{ steps.backend-meta.outputs.bake-file }}
+            cwd://${{ steps.backend-metadata.outputs.bake-file }}
           push: true
-          save: true
-          save-tag: ${{ github.event.number || github.run_id }}
 
   # run-test:
   #   runs-on: ubuntu-latest
