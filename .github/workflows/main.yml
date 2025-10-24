@@ -418,7 +418,7 @@ jobs:
             --set execution.additionalNamespaces.my-app.serviceAccount.name=testkube-my-app --wait
 
           # Wait a bit for runner to register
-          sleep 10
+          sleep 60
 
           # Check runner status
           echo "=== Checking runner status ==="
@@ -447,6 +447,8 @@ jobs:
           # Wait for runner pod to be ready
           echo "Waiting for runner pod to be ready..."
           kubectl wait --for=condition=ready pod -l app.kubernetes.io/name=testkube-runner --timeout=300s -n testkube
+
+          kubectl logs -l app.kubernetes.io/name=testkube-runner -n testkube --tail=20
 
           echo "=== Testkube runner provisioned in vCluster ==="
 
