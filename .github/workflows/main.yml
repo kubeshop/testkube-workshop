@@ -488,7 +488,7 @@ jobs:
             --tag pr=PR-${{ github.run_id }} \
             --tag argocd-deployment=backend-vcluster-pr-$PR_NUMBER \
             --tag demo=gitopscon-chainsaw
-            --variable baseUrl=http://backend.my-app.svc:3000
+            --variable baseUrl=http://backend-vcluster-pr-$PR_NUMBER.my-app.svc:3000
 
       # ==================== Cleanup Module ====================
       - name: Cleanup Testkube Runner
