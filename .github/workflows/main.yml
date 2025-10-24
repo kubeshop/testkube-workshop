@@ -46,7 +46,6 @@ jobs:
         uses: depot/bake-action@v1.12.1
         with:
           token: ${{ secrets.DEPOT_TOKEN }}
-          project: default
           files: |
             ./app/docker-bake.hcl
             cwd://${{ steps.backend-meta.outputs.bake-file }}
