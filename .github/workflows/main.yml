@@ -408,7 +408,7 @@ jobs:
           # Create Chainsaw service account and role binding in vCluster
           echo "=== Setting up Chainsaw service account in vCluster ==="
           kubectl create serviceaccount chainsaw-service-account -n testkube --dry-run=client -o yaml | kubectl apply -f -
-          kubectl create rolebinding chainsaw-service-account-binding --clusterrole=view --serviceaccount=testkube:chainsaw-service-account -n testkube --dry-run=client -o yaml | kubectl apply -f -
+          kubectl create clusterrolebinding chainsaw-service-account-binding --clusterrole=view --serviceaccount=testkube:chainsaw-service-account -n testkube --dry-run=client -o yaml | kubectl apply -f -
 
           echo "=== Creating my-app namespace in vCluster ==="
           kubectl create namespace my-app --dry-run=client -o yaml | kubectl apply -f -
