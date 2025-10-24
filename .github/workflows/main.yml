@@ -509,7 +509,7 @@ jobs:
           argocd login "$ARGOCD_SERVER" --username admin --password "$ARGOCD_PASSWORD" --insecure || true
 
           # Delete ArgoCD application
-          kubectl delete application nginx-vcluster-pr-$PR_NUMBER -n argocd --ignore-not-found=true
+          kubectl delete application backend-vcluster-pr-$PR_NUMBER -n argocd --ignore-not-found=true
 
           # Remove cluster from ArgoCD
           argocd cluster rm "vcluster-pr-$PR_NUMBER" --yes || true
