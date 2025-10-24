@@ -2,7 +2,6 @@ kind: TestWorkflow
 apiVersion: testworkflows.testkube.io/v1
 metadata:
   name: backend-unit
-  namespace: testkube
   labels:
     app: backend
     testkube.io/name: Jest

@@ -20,6 +20,10 @@ kind: TestWorkflow
 apiVersion: testworkflows.testkube.io/v1
 metadata:
   name: chainsaw-test
+  labels:
+    app: backend
+    testkube.io/name: Chainsaw
+    testkube.io/type: infra
 spec:
   config:
     namespace:
