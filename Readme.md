@@ -1,4 +1,4 @@
-# Testing Wars
+# Testkube Workshop
 
 This repository contains the code needed to execute step by step the Testing Wars workshop which shows how to implement Test Automation practice in a Cloud-Native world.
 
@@ -8,4 +8,4 @@ This repository contains the code needed to execute step by step the Testing War
 
 ## Workshop guide step-by-step
 
-Navigate to [Testing Wars docs](https://caiodonascimento.github.io/testing-wars/) and follow the guide.
+Navigate to [Testing Wars docs](https://kubeshop.github.io/testkube-workshop/) and follow the guide.
