@@ -471,8 +471,8 @@ jobs:
             --tag test-type=chainsaw \
             --tag pr=PR-${{ github.run_id }} \
             --tag argocd-deployment=backend-vcluster-pr-$PR_NUMBER \
-            --tag demo=gitopscon-chainsaw
-            --config branch="${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}"
+            --tag demo=gitopscon-chainsaw \
+            --config branch="${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}" \
             --config namespace=my-app
 
       - name: Run Backend Suite Tests with Testkube in vCluster
@@ -489,8 +489,8 @@ jobs:
             --tag test-type=unit \
             --tag pr=PR-${{ github.run_id }} \
             --tag argocd-deployment=backend-vcluster-pr-$PR_NUMBER \
-            --tag demo=gitopscon-chainsaw
-            --config branch="${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}"
+            --tag demo=gitopscon-chainsaw \
+            --config branch="${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}" \
             --config baseUrl=http://backend-vcluster-pr-$PR_NUMBER.my-app.svc:3000
 
       # ==================== Cleanup Module ====================
