@@ -400,7 +400,7 @@ jobs:
           fi
 
           # Provision ephemeral runner in vCluster
-          testkube install runner github-action-runner-${{ github.run_id }} \
+          testkube install runner github-actions-runner-${{ github.run_id }} \
             --create \
             --env paris \
             --namespace testkube \
@@ -414,7 +414,7 @@ jobs:
           echo "=== Creating my-app namespace in vCluster ==="
           kubectl create namespace my-app --dry-run=client -o yaml | kubectl apply -f -
 
-          helm upgrade --namespace testkube testkube-github-action-runner-${{ github.run_id }} kubeshop/testkube-runner --reuse-values \
+          helm upgrade --namespace testkube testkube-github-actions-runner-${{ github.run_id }} kubeshop/testkube-runner --reuse-values \
             --set execution.additionalNamespaces.my-app.serviceAccount.autoCreate=true \
             --set execution.additionalNamespaces.my-app.serviceAccount.name=testkube-my-app --wait
 
@@ -498,7 +498,7 @@ jobs:
         if: always()
         run: |
           echo "=== Cleaning up Testkube runner ==="
-          testkube delete runner github-action-runner-${{ github.run_id }} --delete --uninstall || true
+          testkube delete runner github-actions-runner-${{ github.run_id }} --delete --uninstall || true
           echo "=== Testkube runner cleanup completed ==="
 
       - name: Cleanup ArgoCD Application
