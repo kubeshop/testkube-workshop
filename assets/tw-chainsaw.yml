@@ -12,10 +12,13 @@ spec:
     namespace:
       type: string
       default: my-app
+    branch:
+      type: string
+      default: main
   content:
     git:
-      uri: https://github.com/caiodonascimento/testing-wars.git
-      revision: main
+      uri: https://github.com/kubeshop/testkube-workshop.git
+      revision: '{{ config.branch }}'
       paths:
       - assets/chainsaw
   container:

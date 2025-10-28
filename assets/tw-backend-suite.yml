@@ -5,13 +5,33 @@ metadata:
   labels:
     app: backend
 spec:
+  config:
+    namespace:
+      type: string
+      default: my-app
+    baseUrl:
+      type: string
+      default: http://backend.hotel.svc:3000
+    branch:
+      type: string
+      default: main
   steps:
     - execute:
         workflows:
-          - name: app-backend-unit
-          - name: app-backend-integration
+          - name: backend-unit
+            config:
+              branch: '{{ config.branch }}'
+          - name: backend-integration
+            config:
+              branch: '{{ config.branch }}'
     - execute:
         workflows:
-          - name: app-backend-load
+          - name: backend-load
+            config:
+              baseUrl: '{{ config.baseUrl }}'
+              branch: '{{ config.branch }}'
           - name: chainsaw-test
+            config:
+              namespace: '{{ config.namespace }}'
+              branch: '{{ config.branch }}'
 status: {}

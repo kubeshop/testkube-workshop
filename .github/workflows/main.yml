@@ -400,7 +400,7 @@ jobs:
           fi
 
           # Provision ephemeral runner in vCluster
-          testkube install runner github-action-runner-${{ github.run_id }} \
+          testkube install runner github-actions-runner-${{ github.run_id }} \
             --create \
             --env paris \
             --namespace testkube \
@@ -414,7 +414,7 @@ jobs:
           echo "=== Creating my-app namespace in vCluster ==="
           kubectl create namespace my-app --dry-run=client -o yaml | kubectl apply -f -
 
-          helm upgrade --namespace testkube testkube-github-action-runner-${{ github.run_id }} kubeshop/testkube-runner --reuse-values \
+          helm upgrade --namespace testkube testkube-github-actions-runner-${{ github.run_id }} kubeshop/testkube-runner --reuse-values \
             --set execution.additionalNamespaces.my-app.serviceAccount.autoCreate=true \
             --set execution.additionalNamespaces.my-app.serviceAccount.name=testkube-my-app --wait
 
@@ -437,7 +437,7 @@ jobs:
           if [ -z "$ACTUAL_RUNNER_NAME" ]; then
             echo "Failed to find runner in current cluster, trying more specific search..."
             # Fallback: search in the "Recognized agents" section specifically
-            ACTUAL_RUNNER_NAME=$(testkube get agent | grep -A 20 "Recognized agents in current cluster" | grep "github-action-runner" | awk '{print $1}' | head -1)
+            ACTUAL_RUNNER_NAME=$(testkube get agent | grep -A 20 "Recognized agents in current cluster" | grep "github-actions-runner" | awk '{print $1}' | head -1)
           fi
 
           echo "Extracted runner name: $ACTUAL_RUNNER_NAME"
@@ -471,7 +471,9 @@ jobs:
             --tag test-type=chainsaw \
             --tag pr=PR-${{ github.run_id }} \
             --tag argocd-deployment=backend-vcluster-pr-$PR_NUMBER \
-            --tag demo=gitopscon-chainsaw
+            --tag demo=gitopscon-chainsaw \
+            --config branch="${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}" \
+            --config namespace=my-app
 
       - name: Run Backend Suite Tests with Testkube in vCluster
         id: run-k6-tests
@@ -487,15 +489,16 @@ jobs:
             --tag test-type=unit \
             --tag pr=PR-${{ github.run_id }} \
             --tag argocd-deployment=backend-vcluster-pr-$PR_NUMBER \
-            --tag demo=gitopscon-chainsaw
-            --variable baseUrl=http://backend-vcluster-pr-$PR_NUMBER.my-app.svc:3000
+            --tag demo=gitopscon-chainsaw \
+            --config branch="${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}" \
+            --config baseUrl=http://backend-vcluster-pr-$PR_NUMBER.my-app.svc:3000
 
       # ==================== Cleanup Module ====================
       - name: Cleanup Testkube Runner
         if: always()
         run: |
           echo "=== Cleaning up Testkube runner ==="
-          testkube delete runner github-action-runner-${{ github.run_id }} --delete --uninstall || true
+          testkube delete runner github-actions-runner-${{ github.run_id }} --delete --uninstall || true
           echo "=== Testkube runner cleanup completed ==="
 
       - name: Cleanup ArgoCD Application
