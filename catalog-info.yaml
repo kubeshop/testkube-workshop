@@ -1,0 +1,34 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: hotel-demo-app
+  title: Hotel Demo App
+  description: Just another demo for Testkube platform.
+  annotations:
+    github.com/project-slug: kubeshop/testkube-workshop
+    backstage.io/techdocs-ref: url:https://kubeshop.github.io/testkube-workshop
+  tags:
+  - demo
+spec:
+  owner: group:testkube
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: hotel-demo-app-backend
+  title: Hotel Demo App - Backend
+  description: The backend of the Demo app.
+  annotations:
+    testkube.io/organization: testkube
+    testkube.io/environments: testkube-cloud-test-dev
+    testkube.io/labels: app=backend
+    github.com/project-slug: kubeshop/testkube-workshop
+    backstage.io/techdocs-ref: url:https://kubeshop.github.io/testkube-workshop
+  tags:
+  - backend
+spec:
+  type: service
+  owner: group:testkube
+  system: hotel-demo-app
+  lifecycle: production
